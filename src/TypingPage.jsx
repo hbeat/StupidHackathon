@@ -15,8 +15,6 @@ const TypingPage = () => {
   };
 
   async function transformText(text) {
-    const elem = document.querySelector('#textarea')
-    elem.setAttribute('disabled', '')
     let onChangeMsg = message.split("");
     const maxLength = Math.max(message.length, text.length);
     for (let index = 0; index < maxLength; index++) {
@@ -34,13 +32,13 @@ const TypingPage = () => {
       await sleep(50);
 
       setMessage(outMessage);
-      // elem.value = message;
     }
-    elem.removeAttribute('disabled')
   }
 
   async function evaluateText() {
-    if (message.length > counter.current * 30) {
+    if (message.length > counter.current * 40) {
+      const elem = document.querySelector('#textarea')
+    elem.setAttribute('disabled', '')
       let data = "";
       do {
         const response = await fetch(
@@ -51,6 +49,7 @@ const TypingPage = () => {
       } while (data.length > 60);
       transformText(data);
       counter.current++;
+      elem.removeAttribute('disabled')
     }
   }
 
