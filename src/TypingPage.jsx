@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
+import TransitionsModal from "./TransitionsModal";
 import "./typingpagestyle.css"
 
 const TypingPage = () => {
@@ -75,7 +76,8 @@ const TypingPage = () => {
         <button className='button-2'>ล้างใหม่หมด</button>
         <button className='button-1'>ด่าแม่งเลย</button>
       </form>
-
+      
+      <TransitionsModal title="อุ้ย! ความรักชาติยังไม่หายไปจากใจละเส้" description="อย่ายอมแพ้ ด่าให้ได้ถึง 100 คำ !!!"/>
     
     </>
   );
