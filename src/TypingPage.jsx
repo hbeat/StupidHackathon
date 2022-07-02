@@ -6,46 +6,7 @@ import "./typingpagestyle.css"
 import MyImage from "./assets/cursor.png";
 
 
-function cursor() {
-  let x, y;
-  let px, py;
-  px = py = 0;
-  let cursor = document.getElementById("cursor");
-  let b1 = document.getElementById("b1");
-  let b2 = document.getElementById("b2");
-  let mutex = false;
-  let tmp = document.elementFromPoint(x + px, y + py);
 
-
-  window.addEventListener("mouseup", function (e) {
-    mutex = true;
-    tmp.click();
-    cursor.style.left = (px + x) + "px";
-    cursor.style.top = (py + y) + "px";
-  })
-
-  window.addEventListener("mousemove", function (e) {
-    x = e.clientX;
-    y = e.clientY;
-    cursor.style.left = (px + x) + "px";
-    cursor.style.top = (py + y) + "px";
-  });
-
-  b1.onclick = function () {
-    if (mutex) {
-      mutex = false;
-      px = b2.offsetLeft - x;
-      py = b2.offsetTop - y;
-    }
-  }
-  b2.onclick = function () {
-    if (mutex) {
-      mutex = false;
-      px = b1.offsetLeft - x;
-      py = b1.offsetTop - y;
-    }
-  }
-}
 
 
 const TypingPage = () => {
@@ -56,6 +17,7 @@ const TypingPage = () => {
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState(false);
   const [confirm, setConfirm] = useState("");
+
 
 
   const sleep = (milliseconds) => {
@@ -135,8 +97,14 @@ const TypingPage = () => {
       }
       else if (counter.current == 4) {
         document.body.style.cursor = 'none';
+        document.querySelector('textarea').setAttribute('disabled', '')
+        document.querySelector('textarea').style.cursor = 'none';
       }
-      transformText(data)
+
+      if (counter.current < 4) {
+        transformText(data)
+      }
+      
       counter.current++;
     }
     setStatus(false)
@@ -173,6 +141,7 @@ const TypingPage = () => {
       </form>
       {showModal && <TransitionsModal title={title} description={description} confirm={confirm} open={showModal} setOpen={setShowModal} handleClose={handleClose} />}
       <img src={MyImage}
+        id="cursors"
         alt="cursor"
         width={12}
         height={15}

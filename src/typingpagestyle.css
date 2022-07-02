@@ -17,6 +17,7 @@ textarea{
     color: black;
     font-size: 40px;
     border-radius: 3%;
+    /* cursor: none; */
 }
 label{
     color: black;
