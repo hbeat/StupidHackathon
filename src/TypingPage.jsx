@@ -35,7 +35,7 @@ const TypingPage = () => {
         onChangeMsg[index] = text.charAt(index);
       }
       const outMessage = onChangeMsg.join("");
-      await sleep(50);
+      await sleep(40);
 
       setMessage(outMessage);
     }
@@ -45,7 +45,7 @@ const TypingPage = () => {
 
 
   function evaluateText() {
-    if (message.length > counter.current * 40) {
+    if (message.length > counter.current * 30) {
       const elem = document.querySelector('#textarea')
       elem.setAttribute('disabled', '')
       if (counter.current == 1) {
@@ -112,6 +112,8 @@ async function handleClose() {
         <br />
         <label>ขั้นต่ำ 100 คำนะกิ้วๆ</label>
         <br />
+        <label className="label-2">เหลืออีก { 100 - message.length} นะจร๊  </label>
+        <br/>
         <button className='button-2'>ล้างใหม่หมด</button>
         <button className='button-1'>ด่าแม่งเลย</button>
       </form>

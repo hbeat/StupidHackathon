@@ -15,12 +15,20 @@ textarea{
     height: 400px;
     position: relative;
     color: black;
-    font-size: larger;
+    font-size: 40px;
     border-radius: 3%;
 }
 label{
     color: black;
     font-size: x-large;
+    font-style: bold;
+    position: relative;
+    left: -35%;
+    top: 5px;
+}
+.label-2{
+    color: black;
+    font-size: larger;
     font-style: bold;
     position: relative;
     left: -35%;
