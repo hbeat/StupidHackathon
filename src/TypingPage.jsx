@@ -17,7 +17,29 @@ const TypingPage = () => {
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState(false);
   const [confirm, setConfirm] = useState("");
+  const [x, setX] = useState()
+  const [y, setY] = useState()
+  const [fx, setFx] = useState()
+  const [fy, setFy] = useState()
+  const [, updateState] = React.useState();
+  const forceUpdate = React.useCallback(() => updateState({}), []);
 
+
+  useEffect(
+    () => {
+      const update = (e) => {
+        setX(e.x)
+        setY(e.y)
+      }
+      window.addEventListener('mousemove', update)
+      window.addEventListener('touchmove', update)
+      return () => {
+        window.removeEventListener('mousemove', update)
+        window.removeEventListener('touchmove', update)
+      }
+    },
+    [setX, setY]
+  )
 
 
   const sleep = (milliseconds) => {
@@ -51,7 +73,7 @@ const TypingPage = () => {
   }
 
   function evaluateText() {
-    if (message.length > counter.current * 30) {
+    if (message.length > counter.current * 5) {
       const elem = document.querySelector('#textarea')
       elem.setAttribute('disabled', '')
       if (counter.current == 1) {
@@ -99,6 +121,21 @@ const TypingPage = () => {
         document.body.style.cursor = 'none';
         document.querySelector('textarea').setAttribute('disabled', '')
         document.querySelector('textarea').style.cursor = 'none';
+        const cs = document.querySelector('#cursors')
+        const butPos = cs.getBoundingClientRect()
+        setFx(butPos.left + 45.6)
+        setFy(butPos.top + 16.3)
+        cs.style.top = `${y}px`
+        cs.style.left = `${x}px`
+        for (let i = 0; i < 100; i++) {
+            cs.style.top = `${(100 - i) * y + (i * fy)}px`
+            cs.style.left = `${(100 - i) * x + (i * fx)}px`
+            forceUpdate()
+          await sleep(30)
+        }
+        
+        cs.removeAttribute('hidden')
+        
       }
 
       if (counter.current < 4) {
@@ -112,6 +149,7 @@ const TypingPage = () => {
 
   return (
     <>
+    <p>x={x} y={y}</p>
       <h1>ด่าโลด</h1>
       <form>
         <textarea
@@ -143,9 +181,10 @@ const TypingPage = () => {
       <img src={MyImage}
         id="cursors"
         alt="cursor"
-        width={12}
-        height={15}
-        style={{ position: "absolute", top: "105%", left: "80%" }}
+        width={15}
+        height={18}
+        style={{position: 'absolute'}}
+        hidden={true}
       />
     </>
   );
