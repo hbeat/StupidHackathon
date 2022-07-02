@@ -7,6 +7,8 @@ import LandingPage from './LandingPage'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import FormComponent from './FormComponent'
 import TransitionsModal from './TransitionsModal';
+
+
 function App() {
   const [count, setCount] = useState(0)
 
@@ -16,7 +18,7 @@ function App() {
          <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/typing" element={<TypingPage />} />
-              <Route path="/message" element={<TransitionsModal />} />
+              <Route path="/message" element={<TransitionsModal/>} />
           </Routes> 
       </BrowserRouter>
     </StrictMode>
