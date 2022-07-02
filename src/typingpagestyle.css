@@ -1,4 +1,45 @@
-h1{
-    color: aqua;
-    position: ;
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&display=swap');
+
+body{
+    background-color    : #FCF54C;
+    font-family: 'Chakra Petch', sans-serif;    
 }
+h1  {
+    color: black;
+    position: relative;    
+    font-style: Bold;
+}       
+textarea{   
+    background-color: white;
+    width: 800px;
+    height: 400px;
+    position: relative;
+    color: black;
+    font-size: larger;
+    border-radius: 3%;
+}
+label{
+    color: black;
+    font-size: x-large;
+    font-style: bold;
+    position: relative;
+    left: -35%;
+    top: 5px;
+}
+.button-2{
+    color: black;
+    background-color: red;
+    border: 2px solid black;
+    position: relative ;
+    left: 32%;
+    
+}
+.button-1{
+    color: black;
+    background-color: rgb(63, 241, 63);
+    border: 2px solid black;
+    position: relative;
+    left: 35%;
+
+}
+   
