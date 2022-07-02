@@ -27,6 +27,7 @@ export default function TransitionsModal( props ) {
   const handleOpen = () => props.setOpen(true);
   const handleClose = () => {
     console.log("props.open in modal", props.open)
+    props.handleClose()
     props.setOpen(false);
   }
 

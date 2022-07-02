@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import TransitionsModal from "./TransitionsModal";
+import axios from "axios";
 import "./typingpagestyle.css"
 
 const TypingPage = () => {
@@ -38,38 +39,15 @@ const TypingPage = () => {
 
       setMessage(outMessage);
     }
+    const elem = document.querySelector('#textarea')
+    elem.removeAttribute('disabled')
   }
 
-  function waitButton() {
-    return new Promise((resolve, reject) => {
-      if (showModal == false) {
-        resolve(true);
-      }
-   });
-}
 
-// const waitButton = new Promise((resolve, reject) => {
-//   if (showModal == false) {
-//     resolve(true);
-//   }
-// });
-
-
-
-  async function evaluateText() {
+  function evaluateText() {
     if (message.length > counter.current * 40) {
       const elem = document.querySelector('#textarea')
       elem.setAttribute('disabled', '')
-      let data = "";
-      do {
-        const response = await fetch(
-          "https://watasalim.vercel.app/api/quotes/random"
-        );
-        const json = await response.json();
-        data = json.quote.body;
-      } while (data.length > 60);
-      
-      
       if (counter.current == 1) {
         setTitle("A1");
         setDescription("A2");
@@ -90,30 +68,29 @@ const TypingPage = () => {
       }
 
       console.log("showModal out while", showModal)
-      do{
-        setTimeout(() => {
-          
-        }, 1000);
-      } while(showModal)
-      await transformText(data)
-      // while(showModal){
-      //   console.log("showModal while", showModal)
-      //   setTimeout(async () => {
-      //     console.log("showModal await", showModal)
-      //     await transformText(data);
-      //   }, 1000);
-      // }
-      // console.log("modal before await "+ showModal);
-      // await transformText(data);
-      counter.current++;
-      elem.removeAttribute('disabled')
     }
+
+    
   }
+async function handleClose() {
+      // const elem = document.querySelector('#textarea')
+      // elem.setAttribute('disabled', '')
+      let data = "";
+      if (counter.current == 2) {
+        do {
+        const response = await axios.get(
+          "https://watasalim.vercel.app/api/quotes/random"
+        );
+        const json = await response.data;
+        data = json.quote.body;
+      } while (data.length > 60);
+      }
+      
+      transformText(data)
+      counter.current++;
+      // elem.removeAttribute('disabled')
+    }
 
-  // function displayPopup(text, desc) {
-  //   if (counter == 1) {
-
-  // }
 
   return (
     <>    
@@ -138,7 +115,7 @@ const TypingPage = () => {
         <button className='button-2'>ล้างใหม่หมด</button>
         <button className='button-1'>ด่าแม่งเลย</button>
       </form>
-        {showModal&&<TransitionsModal title={title} description={description} open={showModal} setOpen={setShowModal}/>}
+        {showModal&&<TransitionsModal title={title} description={description} open={showModal} setOpen={setShowModal} handleClose={handleClose}/>}
     
     </>
   );
