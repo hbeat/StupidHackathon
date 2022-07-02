@@ -78,8 +78,6 @@ const TypingPage = () => {
     
   }
 async function handleClose() {
-      // const elem = document.querySelector('#textarea')
-      // elem.setAttribute('disabled', '')
       if (status){
         let data = "";
       if (counter.current == 2) {
@@ -95,13 +93,10 @@ async function handleClose() {
       counter.current++;
       }
       setStatus(false)
-      // elem.removeAttribute('disabled')
     }
-
 
   return (
     <>    
- 
       <h1>ด่าโลด</h1>
       <form>
         <textarea
@@ -112,7 +107,6 @@ async function handleClose() {
           value={message}
           onChange={(e) => {
             handleMessageChange(e);
-
             evaluateText();
           }}
         ></textarea>
