@@ -56,7 +56,7 @@ export default function TransitionsModal( props ) {
             </Typography>
             <br></br>
             <Box textAlign='center'>
-            <Button onClick={handleClose} variant='contained' color="success">ด่าต่อเลย</Button>
+            <Button onClick={handleClose} variant='contained' color="success">{props.confirm}</Button>
             </Box>
           </Box>
         </Fade>

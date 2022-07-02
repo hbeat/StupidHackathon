@@ -11,6 +11,7 @@ const TypingPage = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState(false);
+  const [confirm, setConfirm] = useState("");
 
 
   const sleep = (milliseconds) => {
@@ -52,6 +53,7 @@ const TypingPage = () => {
       if (counter.current == 1) {
         setTitle("อุ้ย! ความรักชาติยังไม่หายไปจากใจละเส้");
         setDescription("อย่ายอมแพ้ ด่าให้ได้ถึง 100 ตัว!!!");
+        setConfirm("ด่าต่อเลย");
         setShowModal(true);
         console.log("false after closing", showModal)
       }
@@ -59,12 +61,14 @@ const TypingPage = () => {
         console.log("current is 2")
         setTitle("จ๊ะเอ๋ตัวเอง ยังรักลุงตู่อยู่ใช่มั้ยล้าา");
         setDescription("ไปให้สุด ด่าลุง ให้สุด 100 ตัวเอง 8 ปียังทนมาได้ !!");
+        setConfirm("ด่าต่อเลย");
         setShowModal(true);
       }
       else if(counter.current == 3) {
         console.log("current is 3")
         setTitle("ความรักชาติกับลุงตู่ยังอยู่ในใจเจ้าใช่มั้ยละ เสียใจด้วยนะ");
-        setDescription("ความพยายามของเจ้ายังไม่พอ ความรักลุงตู่มันกลืนกินเจ้าแล้ว");
+        setDescription("ความพยายามของเจ้ายังไม่พอ ความรักลุงตู่กลืนกินเจ้าแล้ว");
+        setConfirm("พลังของเจ้ายังไม่พอ");
         setShowModal(true);
       }
       setStatus(true)
@@ -87,7 +91,6 @@ async function handleClose() {
         data = json.quote.body;
       } while (data.length > 60);
       }
-      
       transformText(data)
       counter.current++;
       }
@@ -116,12 +119,17 @@ async function handleClose() {
         <br />
         <label>ขั้นต่ำ 100 คำนะกิ้วๆ</label>
         <br />
-        <label className="label-2">เหลืออีก { 100 - message.length} นะจร๊  </label>
+        <label className="label-2">เหลืออีก { 100 - message.length} นะจร๊ะ</label>
         <br/>
         <button className='button-2'>ล้างใหม่หมด</button>
-        <button className='button-1'>ด่าแม่งเลย</button>
+        <button className='button-1' onClick={(e) => {e.preventDefault()
+          setTitle("โอ๊ะโอ ยังไม่ถึง 100 คำนะกิ้วๆ");
+          setDescription("พยายามเข้านะจร๊ะ ด่าโลดเลยจะถึง 100 คำนะกิ้วๆ");
+          setConfirm("ไปด่าต่อนะจร๊");
+          setShowModal(true);
+        }}>ด่าแม่งเลย</button>
       </form>
-        {showModal&&<TransitionsModal title={title} description={description} open={showModal} setOpen={setShowModal} handleClose={handleClose}/>}
+        {showModal&&<TransitionsModal title={title} description={description} confirm={confirm} open={showModal} setOpen={setShowModal} handleClose={handleClose}/>}
     
     </>
   );
