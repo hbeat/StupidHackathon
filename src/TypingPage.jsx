@@ -1,72 +1,78 @@
-import React from 'react'
-import {useState, useEffect} from 'react'
-
-
-
+import React from "react";
+import { useState, useEffect, useRef } from "react";
 
 const TypingPage = () => {
+  const counter = useRef(1);
+  const [message, setMessage] = useState("");
 
-let counter = 1
-const [message, setMessage] = useState('');
+  const sleep = (milliseconds) => {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  };
 
-const handleMessageChange = event => {
-  setMessage(event.target.value);
-  // console.log(event.target.value);
-  console.log(message);
-};
+  const handleMessageChange = (event) => {
+    setMessage(event.target.value);
+  };
 
-// useEffect(() =>{
+  async function transformText(text) {
+    let onChangeMsg = message.split("");
+    const maxLength = Math.max(message.length, text.length);
+    for (let index = 0; index < maxLength; index++) {
+      if (
+        message.charAt(index) != undefined &&
+        text.charAt(index) != undefined
+      ) {
+        onChangeMsg[index] = text.charAt(index);
+      } else if (text.charAt(index) == undefined) {
+        onChangeMsg[index] = "";
+      } else {
+        onChangeMsg[index] = text.charAt(index);
+      }
+      const outMessage = onChangeMsg.join("");
+      await sleep(50);
 
-// }, [message])
-function transformText(text) {
-  const elem = document.querySelector('#textarea')
-  elem.setAttribute('disable', 'true')
-  let onChangeMsg = message.split('')
-  
-  for (let index = 0; index < message.length; index++) {
-    if (message.charAt(index) != undefined || text.charAt(index) != undefined){
-      onChangeMsg[index] = text.charAt(index)
+      setMessage(outMessage);
+      elem.value = message;
     }
-    else if (text.charAt(index) == undefined){
-      onChangeMsg[index] = ''
+  }
+
+  async function evaluateText() {
+    if (message.length > counter.current * 30) {
+      let data = "";
+      do {
+        const response = await fetch(
+          "https://watasalim.vercel.app/api/quotes/random"
+        );
+        const json = await response.json();
+        data = json.quote.body;
+      } while (data.length > 60);
+      transformText(data);
+      counter.current++;
     }
-    const outMessage = onChangeMsg.join("")
-    setTimeout(() => {
-      
-    }, 1000);
-    
-    setMessage(outMessage)
-    elem.value = message
   }
-  elem.setAttribute('disable', 'false')
-    
-}
-function evaluateText(){
-  if (message.length > counter * 5){
-    const newMsg = 'nope'
-    transformText(newMsg)
-    setMessage(newMsg)
-  }
-}
-
-
 
   return (
     <>
       <h1>ด่าโลด</h1>
       <form>
-         <textarea id="textarea" name="textarea" rows="20" cols="40" value={message} onChange={(e) => {
-          handleMessageChange(e)
-          evaluateText()
-         }}></textarea>
-         <br/>
-         <label>ขั้นต่ำ 100 คำนะกิ้วๆ</label>
-         <br/>
-         <button>ล้างใหม่หมด</button>
-         <button>ด่าแม่งเลย</button>
+        <textarea
+          id="textarea"
+          name="textarea"
+          rows="20"
+          cols="40"
+          value={message}
+          onChange={(e) => {
+            handleMessageChange(e);
+            evaluateText();
+          }}
+        ></textarea>
+        <br />
+        <label>ขั้นต่ำ 100 คำนะกิ้วๆ</label>
+        <br />
+        <button>ล้างใหม่หมด</button>
+        <button>ด่าแม่งเลย</button>
       </form>
     </>
-  )
-}
+  );
+};
 
-export default TypingPage
+export default TypingPage;
