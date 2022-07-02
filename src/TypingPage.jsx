@@ -10,6 +10,7 @@ const TypingPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [status, setStatus] = useState(false);
 
 
   const sleep = (milliseconds) => {
@@ -66,7 +67,7 @@ const TypingPage = () => {
         setDescription("ความพยายามของเจ้ายังไม่พอ ความรักลุงตู่มันกลืนกินเจ้าแล้ว");
         setShowModal(true);
       }
-
+      setStatus(true)
       console.log("showModal out while", showModal)
     }
 
@@ -75,7 +76,8 @@ const TypingPage = () => {
 async function handleClose() {
       // const elem = document.querySelector('#textarea')
       // elem.setAttribute('disabled', '')
-      let data = "";
+      if (status){
+        let data = "";
       if (counter.current == 2) {
         do {
         const response = await axios.get(
@@ -88,6 +90,8 @@ async function handleClose() {
       
       transformText(data)
       counter.current++;
+      }
+      setStatus(false)
       // elem.removeAttribute('disabled')
     }
 
