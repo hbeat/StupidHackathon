@@ -51,7 +51,7 @@ export default function TransitionsModal( props ) {
             <Typography id="transition-modal-title" variant="h6" component="h1">
               {props.title}
             </Typography>
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+            <Typography id="transition-modal-description" color="black" sx={{ mt: 2 }}>
               {props.description} 
             </Typography>
             <br></br>

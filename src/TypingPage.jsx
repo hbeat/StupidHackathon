@@ -49,21 +49,21 @@ const TypingPage = () => {
       const elem = document.querySelector('#textarea')
       elem.setAttribute('disabled', '')
       if (counter.current == 1) {
-        setTitle("A1");
-        setDescription("A2");
+        setTitle("อุ้ย! ความรักชาติยังไม่หายไปจากใจละเส้");
+        setDescription("อย่ายอมแพ้ ด่าให้ได้ถึง 100 ตัว!!!");
         setShowModal(true);
         console.log("false after closing", showModal)
       }
       else if(counter.current == 2) {
         console.log("current is 2")
-        setTitle("คุณกำลังพิมพ์ข้อความนี้");
-        setDescription("กรุณารอสักครู่");
+        setTitle("จ๊ะเอ๋ตัวเอง ยังรักลุงตู่อยู่ใช่มั้ยล้าา");
+        setDescription("ไปให้สุด ด่าลุง ให้สุด 100 ตัวเอง 8 ปียังทนมาได้ !!");
         setShowModal(true);
       }
       else if(counter.current == 3) {
         console.log("current is 3")
-        setTitle("คุณกำลังพิมพ์ข้อความนี้");
-        setDescription("กรุณารอสักครู่");
+        setTitle("ความรักชาติกับลุงตู่ยังอยู่ในใจเจ้าใช่มั้ยละ เสียใจด้วยนะ");
+        setDescription("ความพยายามของเจ้ายังไม่พอ ความรักลุงตู่มันกลืนกินเจ้าแล้ว");
         setShowModal(true);
       }
 
