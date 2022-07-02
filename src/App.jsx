@@ -4,19 +4,19 @@ import reactLogo from './assets/react.svg'
 import './App.css'
 import TypingPage from './TypingPage'
 import LandingPage from './LandingPage'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import FormComponent from './FormComponent'
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<LandingPage />} />
-          <Route path="type" element={<TypingPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+         <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/typing" element={<TypingPage />} />
+          </Routes> 
+      </BrowserRouter>
     </StrictMode>
   )
 }
