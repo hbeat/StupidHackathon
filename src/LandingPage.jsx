@@ -12,4 +12,4 @@ const LandingPage = () => {
   )
 }
 
-export default LandingPageg
+export default LandingPage;
