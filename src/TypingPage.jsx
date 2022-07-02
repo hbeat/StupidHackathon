@@ -3,6 +3,50 @@ import { useState, useEffect, useRef } from "react";
 import TransitionsModal from "./TransitionsModal";
 import axios from "axios";
 import "./typingpagestyle.css"
+import MyImage from "./assets/cursor.png";
+
+
+function cursor() {
+  let x, y;
+  let px, py;
+  px = py = 0;
+  let cursor = document.getElementById("cursor");
+  let b1 = document.getElementById("b1");
+  let b2 = document.getElementById("b2");
+  let mutex = false;
+  let tmp = document.elementFromPoint(x + px, y + py);
+
+
+  window.addEventListener("mouseup", function (e) {
+    mutex = true;
+    tmp.click();
+    cursor.style.left = (px + x) + "px";
+    cursor.style.top = (py + y) + "px";
+  })
+
+  window.addEventListener("mousemove", function (e) {
+    x = e.clientX;
+    y = e.clientY;
+    cursor.style.left = (px + x) + "px";
+    cursor.style.top = (py + y) + "px";
+  });
+
+  b1.onclick = function () {
+    if (mutex) {
+      mutex = false;
+      px = b2.offsetLeft - x;
+      py = b2.offsetTop - y;
+    }
+  }
+  b2.onclick = function () {
+    if (mutex) {
+      mutex = false;
+      px = b1.offsetLeft - x;
+      py = b1.offsetTop - y;
+    }
+  }
+}
+
 
 const TypingPage = () => {
   const counter = useRef(1);
@@ -38,13 +82,11 @@ const TypingPage = () => {
       }
       const outMessage = onChangeMsg.join("");
       await sleep(40);
-
       setMessage(outMessage);
     }
     const elem = document.querySelector('#textarea')
     elem.removeAttribute('disabled')
   }
-
 
   function evaluateText() {
     if (message.length > counter.current * 30) {
@@ -57,46 +99,51 @@ const TypingPage = () => {
         setShowModal(true);
         console.log("false after closing", showModal)
       }
-      else if(counter.current == 2) {
+      else if (counter.current == 2) {
         console.log("current is 2")
         setTitle("จ๊ะเอ๋ตัวเอง ยังรักลุงตู่อยู่ใช่มั้ยล้าา");
         setDescription("ไปให้สุด ด่าลุง ให้สุด 100 ตัวเอง 8 ปียังทนมาได้ !!");
         setConfirm("ด่าต่อเลย");
         setShowModal(true);
       }
-      else if(counter.current == 3) {
+      else if (counter.current == 3) {
         console.log("current is 3")
         setTitle("ความรักชาติกับลุงตู่ยังอยู่ในใจเจ้าใช่มั้ยละ เสียใจด้วยนะ");
         setDescription("ความพยายามของเจ้ายังไม่พอ ความรักลุงตู่กลืนกินเจ้าแล้ว");
         setConfirm("พลังของเจ้ายังไม่พอ");
         setShowModal(true);
+        counter.current++;
+        // cursor();
       }
       setStatus(true)
       console.log("showModal out while", showModal)
     }
 
-    
+
   }
-async function handleClose() {
-      if (status){
-        let data = "";
+  async function handleClose() {
+    if (status) {
+      let data = "";
       if (counter.current == 2) {
         do {
-        const response = await axios.get(
-          "https://watasalim.vercel.app/api/quotes/random"
-        );
-        const json = await response.data;
-        data = json.quote.body;
-      } while (data.length > 60);
+          const response = await axios.get(
+            "https://watasalim.vercel.app/api/quotes/random"
+          );
+          const json = await response.data;
+          data = json.quote.body;
+        } while (data.length > 60);
+      }
+      else if (counter.current == 4) {
+        document.body.style.cursor = 'none';
       }
       transformText(data)
       counter.current++;
-      }
-      setStatus(false)
     }
+    setStatus(false)
+  }
 
   return (
-    <>    
+    <>
       <h1>ด่าโลด</h1>
       <form>
         <textarea
@@ -113,18 +160,24 @@ async function handleClose() {
         <br />
         <label>ขั้นต่ำ 100 คำนะกิ้วๆ</label>
         <br />
-        <label className="label-2">เหลืออีก { 100 - message.length} นะจร๊ะ</label>
-        <br/>
+        <label className="label-2">เหลืออีก {100 - message.length} นะจร๊ะ</label>
+        <br />
         <button className='button-2'>ล้างใหม่หมด</button>
-        <button className='button-1' onClick={(e) => {e.preventDefault()
+        <button className='button-1' onClick={(e) => {
+          e.preventDefault()
           setTitle("โอ๊ะโอ ยังไม่ถึง 100 คำนะกิ้วๆ");
           setDescription("พยายามเข้านะจร๊ะ ด่าโลดเลยจะถึง 100 คำนะกิ้วๆ");
           setConfirm("ไปด่าต่อนะจร๊");
           setShowModal(true);
         }}>ด่าแม่งเลย</button>
       </form>
-        {showModal&&<TransitionsModal title={title} description={description} confirm={confirm} open={showModal} setOpen={setShowModal} handleClose={handleClose}/>}
-    
+      {showModal && <TransitionsModal title={title} description={description} confirm={confirm} open={showModal} setOpen={setShowModal} handleClose={handleClose} />}
+      <img src={MyImage}
+        alt="cursor"
+        width={12}
+        height={15}
+        style={{ position: "absolute", top: "105%", left: "80%" }}
+      />
     </>
   );
 };
