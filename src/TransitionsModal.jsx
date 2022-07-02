@@ -23,17 +23,21 @@ const style = {
 
 
 export default function TransitionsModal( props ) {
-  const [open, setOpen] = React.useState(true);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const [open, setOpen] = React.useState(true);
+  const handleOpen = () => props.setOpen(true);
+  const handleClose = () => {
+    console.log("props.open in modal", props.open)
+    props.setOpen(false);
+  }
 
+  console.log("oepn and props.open", open, props.open);
   return (
     <div>
       <Button onClick={handleOpen}></Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
-        open={open}
+        open={props.open}
         onClose={handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
@@ -41,7 +45,7 @@ export default function TransitionsModal( props ) {
           timeout: 500,
         }}
       >
-        <Fade in={open}>
+        <Fade in={props.open}>
           <Box sx={style}>
             <Typography id="transition-modal-title" variant="h6" component="h1">
               {props.title}

@@ -6,6 +6,10 @@ import "./typingpagestyle.css"
 const TypingPage = () => {
   const counter = useRef(1);
   const [message, setMessage] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
 
   const sleep = (milliseconds) => {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -36,10 +40,26 @@ const TypingPage = () => {
     }
   }
 
+  function waitButton() {
+    return new Promise((resolve, reject) => {
+      if (showModal == false) {
+        resolve(true);
+      }
+   });
+}
+
+// const waitButton = new Promise((resolve, reject) => {
+//   if (showModal == false) {
+//     resolve(true);
+//   }
+// });
+
+
+
   async function evaluateText() {
     if (message.length > counter.current * 40) {
       const elem = document.querySelector('#textarea')
-    elem.setAttribute('disabled', '')
+      elem.setAttribute('disabled', '')
       let data = "";
       do {
         const response = await fetch(
@@ -48,11 +68,52 @@ const TypingPage = () => {
         const json = await response.json();
         data = json.quote.body;
       } while (data.length > 60);
-      transformText(data);
+      
+      
+      if (counter.current == 1) {
+        setTitle("A1");
+        setDescription("A2");
+        setShowModal(true);
+        console.log("false after closing", showModal)
+      }
+      else if(counter.current == 2) {
+        console.log("current is 2")
+        setTitle("คุณกำลังพิมพ์ข้อความนี้");
+        setDescription("กรุณารอสักครู่");
+        setShowModal(true);
+      }
+      else if(counter.current == 3) {
+        console.log("current is 3")
+        setTitle("คุณกำลังพิมพ์ข้อความนี้");
+        setDescription("กรุณารอสักครู่");
+        setShowModal(true);
+      }
+
+      console.log("showModal out while", showModal)
+      do{
+        setTimeout(() => {
+          
+        }, 1000);
+      } while(showModal)
+      await transformText(data)
+      // while(showModal){
+      //   console.log("showModal while", showModal)
+      //   setTimeout(async () => {
+      //     console.log("showModal await", showModal)
+      //     await transformText(data);
+      //   }, 1000);
+      // }
+      // console.log("modal before await "+ showModal);
+      // await transformText(data);
       counter.current++;
       elem.removeAttribute('disabled')
     }
   }
+
+  // function displayPopup(text, desc) {
+  //   if (counter == 1) {
+
+  // }
 
   return (
     <>    
@@ -67,6 +128,7 @@ const TypingPage = () => {
           value={message}
           onChange={(e) => {
             handleMessageChange(e);
+
             evaluateText();
           }}
         ></textarea>
@@ -76,8 +138,7 @@ const TypingPage = () => {
         <button className='button-2'>ล้างใหม่หมด</button>
         <button className='button-1'>ด่าแม่งเลย</button>
       </form>
-      
-      <TransitionsModal title="อุ้ย! ความรักชาติยังไม่หายไปจากใจละเส้" description="อย่ายอมแพ้ ด่าให้ได้ถึง 100 คำ !!!"/>
+        {showModal&&<TransitionsModal title={title} description={description} open={showModal} setOpen={setShowModal}/>}
     
     </>
   );
