@@ -15,7 +15,7 @@ const End = () => {
   
     return (
     <>
-      <style>{'body { background-image:url("https://www.prachachat.net/wp-content/uploads/2022/02/%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%A2%E0%B8%B8%E0%B8%97%E0%B8%98%E0%B9%8C-%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B9%83%E0%B8%88000.jpg");  width: 100%; height: 100%; background-position: center; background-size: cover;' }</style>
+      <style>{'body { background-image:url("https://media.discordapp.net/attachments/992626118957998091/992989048090140712/E0B89BE0B8A3E0B8B0E0B8A2E0B8B8E0B.png?width=995&height=663");  width: 100%; height: 100%; background-position: center; background-size: cover;' }</style>
       <button className='button-1'  
           style={{
             position: 'absolute', left: '50%', top: '50%',
