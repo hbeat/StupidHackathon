@@ -90,7 +90,7 @@ const TypingPage = () => {
       }
       else if (counter.current == 4) {
         document.body.style.cursor = 'none';
-        navigate("/end");
+       
             }
       transformText(data)
       counter.current++;
@@ -118,6 +118,9 @@ const TypingPage = () => {
         <br />
         <label className="label-2">เหลืออีก {100 - message.length} นะจร๊ะ</label>
         <br />
+        <button className='button-4' onClick={() => {
+           navigate("/end");
+        }}>tuuuuu </button>
         <button className='button-2'>ล้างใหม่หมด</button>
         <button className='button-1' onClick={(e) => {
           e.preventDefault()
