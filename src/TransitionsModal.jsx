@@ -16,7 +16,7 @@ const style = {
   border: '3px solid green',
   boxShadow: 30,
   borderRadius: '20px',
-  p: 5,
+  p: 7,
   outline: 'none',
 };
 
@@ -48,10 +48,10 @@ export default function TransitionsModal( props ) {
       >
         <Fade in={props.open}>
           <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h1">
+            <Typography id="transition-modal-title" variant="h5" component="h1" sx={{fontWeight: 'bold'}}>
               {props.title}
             </Typography>
-            <Typography id="transition-modal-description" color="black" sx={{ mt: 2 }}>
+            <Typography id="transition-modal-description" variant="h6" color="black" sx={{ mt: 2 }}>
               {props.description} 
             </Typography>
             <br></br>
