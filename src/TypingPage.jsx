@@ -78,7 +78,7 @@ const TypingPage = () => {
   }
 
   function evaluateText() {
-    if (message.length > counter.current * 5) {
+    if (message.length > counter.current * 30) {
       const elem = document.querySelector('#textarea')
       elem.setAttribute('disabled', '')
       if (counter.current == 1) {
@@ -126,9 +126,10 @@ const TypingPage = () => {
         document.querySelectorAll('button').forEach(button => {
           button.style.cursor = 'none';
         })
+        document.querySelector('.button-4').removeAttribute('hidden');
         const cs = document.querySelector('#cursors')
         cs.style.zIndex = '50'
-        const bt = document.querySelector('.button-2')
+        const bt = document.querySelector('.button-4')
         // const butPos = bt.getBoundingClientRect()
         cs.removeAttribute('hidden')
         // console.log('butpos left ', bt.offsetTop);
@@ -140,18 +141,19 @@ const TypingPage = () => {
         // setFy(y)
         cs.style.top = `${y}px`
         cs.style.left = `${x}px`
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 200; i++) {
           console.log('top = ', cs.style.top, y, bt.offsetTop);
-            cs.style.top = `${y - ((y - bt.offsetTop - 16.3) * (i + 1)  / 100)}px`
-            cs.style.left = `${x - ((x - bt.offsetLeft - 45.6) * (i + 1)  / 100)}px`
+            cs.style.top = `${y - ((y - bt.offsetTop - 16.3) * (i + 1)  / 200)}px`
+            cs.style.left = `${x - ((x - bt.offsetLeft - 45.6) * (i + 1)  / 200)}px`
             forceUpdate()
-          await sleep(10)
+          await sleep(15)
         }
         clearText()
-        window.location.href = "http://www.w3schools.com";
+        // window.location.href = "http://www.w3schools.com";
         
         // cs.removeAttribute('hidden')
-       
+       await sleep(1000)
+       document.body.style.cursor = 'auto';
         navigate('/end')
 
       }
@@ -186,18 +188,18 @@ const TypingPage = () => {
           }}
         ></textarea>
         <br />
-        <label>ขั้นต่ำ ๑๐๐ คำนะกิ้วๆ</label>
+        <label>ขั้นต่ำ ๑๐๐ ตัวอักษรนะกิ้วๆ</label>
         <br />
         <label className="label-2">เหลืออีก {100 - message.length} นะจร๊ะ</label>
         <br />
-        <button className='button-4' onClick={() => {
+        <button className='button-4' hidden={true} onClick={(e) => {
+           e.preventDefault();
            navigate("/end");
-        }}>tuuuuu </button>
+        }}>สรรเสริญลุง</button>
         <button className='button-2' onClick={(e) => {
           e.preventDefault();
           clearText();
         } }>ล้างใหม่หมด</button>
-        <button className='button-2'>ล้างใหม่หมด</button>
         <button className='button-1' onClick={(e) => {
           e.preventDefault()
           setTitle("โอ๊ะโอ ยังไม่ถึง ๑๐๐ คำนะกิ้วๆ");
