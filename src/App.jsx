@@ -7,6 +7,7 @@ import LandingPage from './LandingPage'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import FormComponent from './FormComponent'
 import TransitionsModal from './TransitionsModal';
+import End from './End'
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/typing" element={<TypingPage />} />
               <Route path="/message" element={<TransitionsModal/>} />
+              <Route path="/end" element={<End/>} />
           </Routes> 
       </BrowserRouter>
     </StrictMode>
