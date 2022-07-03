@@ -91,7 +91,7 @@ const TypingPage = () => {
       else if (counter.current == 4) {
         document.body.style.cursor = 'none';
         navigate("/end");
-      }
+            }
       transformText(data)
       counter.current++;
     }
