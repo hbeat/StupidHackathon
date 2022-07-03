@@ -77,8 +77,8 @@ button:focus-visible {
 }
 
 .landing-page-button {
-  background-color: #E91919;
-  color: #FCF54C;
+  background-color: #FCF54C;
+  color: #E91919;
   font-size: 78px;
   font-family: Inter-SemiBold;
   border: none;
