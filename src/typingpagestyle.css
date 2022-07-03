@@ -51,6 +51,10 @@ label{
     left: 35%;
 
 }
+
+button:hover{
+    cursor: default;
+
 .button-4{
     color: white            ;
     background-color: rgb(58, 55, 255);

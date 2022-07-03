@@ -18,8 +18,35 @@ const TypingPage = () => {
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState(false);
   const [confirm, setConfirm] = useState("");
+  const [x, setX] = useState()
+  const [y, setY] = useState()
+  const [fx, setFx] = useState(0)
+  const [fy, setFy] = useState(0)
+  const [, updateState] = React.useState();
+  const forceUpdate = React.useCallback(() => updateState({}), []);
+
+
+  useEffect(
+    () => {
+      const update = (e) => {
+        setX(e.x)
+        setY(e.y)
+      }
+      window.addEventListener('mousemove', update)
+      window.addEventListener('touchmove', update)
+      return () => {
+        window.removeEventListener('mousemove', update)
+        window.removeEventListener('touchmove', update)
+      }
+    },
+    [setX, setY]
+  )
+
+
+
   const navigate = useNavigate();
   
+
   const sleep = (milliseconds) => {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   };
@@ -96,7 +123,37 @@ const TypingPage = () => {
         document.body.style.cursor = 'none';
         document.querySelector('textarea').setAttribute('disabled', '')
         document.querySelector('textarea').style.cursor = 'none';
+        document.querySelectorAll('button').forEach(button => {
+          button.style.cursor = 'none';
+        })
+        const cs = document.querySelector('#cursors')
+        cs.style.zIndex = '50'
+        const bt = document.querySelector('.button-2')
+        // const butPos = bt.getBoundingClientRect()
+        cs.removeAttribute('hidden')
+        // console.log('butpos left ', bt.offsetTop);
+        // setFx(bt.offsetLeft + 45.6)
+        // console.log(fx);
+        // setFy(bt.offsetTop + 16.3)
+        // console.log(fy);
+        // setFx(x)
+        // setFy(y)
+        cs.style.top = `${y}px`
+        cs.style.left = `${x}px`
+        for (let i = 0; i < 100; i++) {
+          console.log('top = ', cs.style.top, y, bt.offsetTop);
+            cs.style.top = `${y - ((y - bt.offsetTop - 16.3) * (i + 1)  / 100)}px`
+            cs.style.left = `${x - ((x - bt.offsetLeft - 45.6) * (i + 1)  / 100)}px`
+            forceUpdate()
+          await sleep(10)
+        }
+        clearText()
+        window.location.href = "http://www.w3schools.com";
+        
+        // cs.removeAttribute('hidden')
+       
         navigate('/end')
+
       }
 
       if (counter.current < 4) {
@@ -106,6 +163,11 @@ const TypingPage = () => {
       counter.current++;
     }
     setStatus(false)
+  }
+
+  function clearText(){
+    setMessage("")
+    counter.current = 1
   }
 
   return (
@@ -131,6 +193,10 @@ const TypingPage = () => {
         <button className='button-4' onClick={() => {
            navigate("/end");
         }}>tuuuuu </button>
+        <button className='button-2' onClick={(e) => {
+          e.preventDefault();
+          clearText();
+        } }>ล้างใหม่หมด</button>
         <button className='button-2'>ล้างใหม่หมด</button>
         <button className='button-1' onClick={(e) => {
           e.preventDefault()
@@ -144,9 +210,10 @@ const TypingPage = () => {
       <img src={MyImage}
         id="cursors"
         alt="cursor"
-        width={12}
-        height={15}
-        style={{ position: "absolute", top: "105%", left: "80%" }}
+        width={15}
+        height={18}
+        style={{position: 'absolute'}}
+        hidden={true}
       />
     </>
   );
