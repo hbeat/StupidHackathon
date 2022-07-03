@@ -19,8 +19,8 @@ const TypingPage = () => {
   const [confirm, setConfirm] = useState("");
   const [x, setX] = useState()
   const [y, setY] = useState()
-  const [fx, setFx] = useState()
-  const [fy, setFy] = useState()
+  const [fx, setFx] = useState(0)
+  const [fy, setFy] = useState(0)
   const [, updateState] = React.useState();
   const forceUpdate = React.useCallback(() => updateState({}), []);
 
@@ -121,20 +121,33 @@ const TypingPage = () => {
         document.body.style.cursor = 'none';
         document.querySelector('textarea').setAttribute('disabled', '')
         document.querySelector('textarea').style.cursor = 'none';
+        document.querySelectorAll('button').forEach(button => {
+          button.style.cursor = 'none';
+        })
         const cs = document.querySelector('#cursors')
-        const butPos = cs.getBoundingClientRect()
-        setFx(butPos.left + 45.6)
-        setFy(butPos.top + 16.3)
+        cs.style.zIndex = '50'
+        const bt = document.querySelector('.button-2')
+        // const butPos = bt.getBoundingClientRect()
+        cs.removeAttribute('hidden')
+        // console.log('butpos left ', bt.offsetTop);
+        // setFx(bt.offsetLeft + 45.6)
+        // console.log(fx);
+        // setFy(bt.offsetTop + 16.3)
+        // console.log(fy);
+        // setFx(x)
+        // setFy(y)
         cs.style.top = `${y}px`
         cs.style.left = `${x}px`
         for (let i = 0; i < 100; i++) {
-            cs.style.top = `${(100 - i) * y + (i * fy)}px`
-            cs.style.left = `${(100 - i) * x + (i * fx)}px`
+          console.log('top = ', cs.style.top, y, bt.offsetTop);
+            cs.style.top = `${y - ((y - bt.offsetTop - 16.3) * (i + 1)  / 100)}px`
+            cs.style.left = `${x - ((x - bt.offsetLeft - 45.6) * (i + 1)  / 100)}px`
             forceUpdate()
-          await sleep(30)
+          await sleep(10)
         }
         
-        cs.removeAttribute('hidden')
+        
+        // cs.removeAttribute('hidden')
         
       }
 
