@@ -1,52 +1,10 @@
-import React from "react";
+import React from 'react'
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import TransitionsModal from "./TransitionsModal";
 import axios from "axios";
 import "./typingpagestyle.css"
 import MyImage from "./assets/cursor.png";
-
-
-function cursor() {
-  let x, y;
-  let px, py;
-  px = py = 0;
-  let cursor = document.getElementById("cursor");
-  let b1 = document.getElementById("b1");
-  let b2 = document.getElementById("b2");
-  let mutex = false;
-  let tmp = document.elementFromPoint(x + px, y + py);
-
-
-  window.addEventListener("mouseup", function (e) {
-    mutex = true;
-    tmp.click();
-    cursor.style.left = (px + x) + "px";
-    cursor.style.top = (py + y) + "px";
-  })
-
-  window.addEventListener("mousemove", function (e) {
-    x = e.clientX;
-    y = e.clientY;
-    cursor.style.left = (px + x) + "px";
-    cursor.style.top = (py + y) + "px";
-  });
-
-  b1.onclick = function () {
-    if (mutex) {
-      mutex = false;
-      px = b2.offsetLeft - x;
-      py = b2.offsetTop - y;
-    }
-  }
-  b2.onclick = function () {
-    if (mutex) {
-      mutex = false;
-      px = b1.offsetLeft - x;
-      py = b1.offsetTop - y;
-    }
-  }
-}
-
 
 const TypingPage = () => {
   const counter = useRef(1);
@@ -56,8 +14,8 @@ const TypingPage = () => {
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState(false);
   const [confirm, setConfirm] = useState("");
-
-
+  const navigate = useNavigate();
+  
   const sleep = (milliseconds) => {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   };
@@ -89,12 +47,12 @@ const TypingPage = () => {
   }
 
   function evaluateText() {
-    if (message.length > counter.current * 30) {
+    if (message.length > counter.current * 5) {
       const elem = document.querySelector('#textarea')
       elem.setAttribute('disabled', '')
       if (counter.current == 1) {
         setTitle("อุ้ย! ความรักชาติยังไม่หายไปจากใจละเส้");
-        setDescription("อย่ายอมแพ้ ด่าให้ได้ถึง 100 ตัว!!!");
+        setDescription("อย่ายอมแพ้ ด่าให้ได้ถึง ๑๐๐ ตัว!!!");
         setConfirm("ด่าต่อเลย");
         setShowModal(true);
         console.log("false after closing", showModal)
@@ -102,7 +60,7 @@ const TypingPage = () => {
       else if (counter.current == 2) {
         console.log("current is 2")
         setTitle("จ๊ะเอ๋ตัวเอง ยังรักลุงตู่อยู่ใช่มั้ยล้าา");
-        setDescription("ไปให้สุด ด่าลุง ให้สุด 100 ตัวเอง 8 ปียังทนมาได้ !!");
+        setDescription("ไปให้สุด ด่าลุง ให้สุด ๑๐๐ ตัวเอง ๘ ปียังทนมาได้ !!");
         setConfirm("ด่าต่อเลย");
         setShowModal(true);
       }
@@ -113,13 +71,10 @@ const TypingPage = () => {
         setConfirm("พลังของเจ้ายังไม่พอ");
         setShowModal(true);
         counter.current++;
-        // cursor();
       }
       setStatus(true)
       console.log("showModal out while", showModal)
     }
-
-
   }
   async function handleClose() {
     if (status) {
@@ -135,6 +90,7 @@ const TypingPage = () => {
       }
       else if (counter.current == 4) {
         document.body.style.cursor = 'none';
+        navigate("/end");
       }
       transformText(data)
       counter.current++;
@@ -158,15 +114,15 @@ const TypingPage = () => {
           }}
         ></textarea>
         <br />
-        <label>ขั้นต่ำ 100 คำนะกิ้วๆ</label>
+        <label>ขั้นต่ำ ๑๐๐ คำนะกิ้วๆ</label>
         <br />
         <label className="label-2">เหลืออีก {100 - message.length} นะจร๊ะ</label>
         <br />
         <button className='button-2'>ล้างใหม่หมด</button>
         <button className='button-1' onClick={(e) => {
           e.preventDefault()
-          setTitle("โอ๊ะโอ ยังไม่ถึง 100 คำนะกิ้วๆ");
-          setDescription("พยายามเข้านะจร๊ะ ด่าโลดเลยจะถึง 100 คำนะกิ้วๆ");
+          setTitle("โอ๊ะโอ ยังไม่ถึง ๑๐๐ คำนะกิ้วๆ");
+          setDescription("พยายามเข้านะจร๊ะ ด่าโลดเลยจะถึง ๑๐๐ คำนะกิ้วๆ");
           setConfirm("ไปด่าต่อนะจร๊");
           setShowModal(true);
         }}>ด่าแม่งเลย</button>
