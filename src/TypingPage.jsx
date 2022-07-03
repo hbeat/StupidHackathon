@@ -145,7 +145,8 @@ const TypingPage = () => {
             forceUpdate()
           await sleep(10)
         }
-        
+        clearText()
+        window.location.href = "http://www.w3schools.com";
         
         // cs.removeAttribute('hidden')
         
@@ -160,9 +161,13 @@ const TypingPage = () => {
     setStatus(false)
   }
 
+  function clearText(){
+    setMessage("")
+    counter.current = 1
+  }
+
   return (
     <>
-    <p>x={x} y={y}</p>
       <h1>ด่าโลด</h1>
       <form>
         <textarea
@@ -181,7 +186,10 @@ const TypingPage = () => {
         <br />
         <label className="label-2">เหลืออีก {100 - message.length} นะจร๊ะ</label>
         <br />
-        <button className='button-2'>ล้างใหม่หมด</button>
+        <button className='button-2' onClick={(e) => {
+          e.preventDefault();
+          clearText();
+        } }>ล้างใหม่หมด</button>
         <button className='button-1' onClick={(e) => {
           e.preventDefault()
           setTitle("โอ๊ะโอ ยังไม่ถึง 100 คำนะกิ้วๆ");
